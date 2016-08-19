@@ -70,12 +70,12 @@ FLOAT_TYPE      = hard
 BUILD_DIR       = $(PWD)/Build
 
 # Project name
-PROJ_NAME       = $(IC_CONFIG)_mcs_gpio_mqtt
+PROJ_NAME       = $(IC_CONFIG)_mcs_encode_string_mqtt
 PROJ_PATH       = $(PWD)
 OUTPATH         = $(PWD)/Build
 
 # Main APP files
-APP_PATH        = project/$(IC_CONFIG)_hdk/apps/mcs_gpio_mqtt
+APP_PATH        = project/$(IC_CONFIG)_hdk/apps/mcs_encode_string_mqtt
 APP_PATH_SRC    = $(APP_PATH)/src
 
 

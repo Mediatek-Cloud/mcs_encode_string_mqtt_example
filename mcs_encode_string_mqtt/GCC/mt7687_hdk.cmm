@@ -30,7 +30,7 @@ DATA.LOAD.ELF V:\geneva_git\gva\out\mt7687_xip.elf /nocode
 
 y.spath kernel/rtos/FreeRTOS/Source/
 y.spath driver/chip/mt7687/src/
-y.spath project/mt7687_hdk/apps/mcs_gpio_mqtt/
+y.spath project/mt7687_hdk/apps/mcs_encode_string_mqtt/
 
 d.l
 

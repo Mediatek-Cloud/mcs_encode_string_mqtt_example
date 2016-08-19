@@ -46,14 +46,14 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>..\..\..\..\..\out_keil\mt7687_hdk\mcs_gpio_mqtt\Objects\</OutputDirectory>
-          <OutputName>mcs_gpio_mqtt</OutputName>
+          <OutputDirectory>..\..\..\..\..\out_keil\mt7687_hdk\mcs_encode_string_mqtt\Objects\</OutputDirectory>
+          <OutputName>mcs_encode_string_mqtt</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath>..\..\..\..\..\out_keil\mt7687_hdk\mcs_gpio_mqtt\Listings\</ListingPath>
+          <ListingPath>..\..\..\..\..\out_keil\mt7687_hdk\mcs_encode_string_mqtt\Listings\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>

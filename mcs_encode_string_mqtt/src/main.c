@@ -65,10 +65,13 @@
 #define port "1883"
 #define clientId "mt7687"
 
-/* gpio module */
-#include "hal_gpio.h"
-#define GPIO_ON "switch,1"
-#define GPIO_OFF "switch,0"
+/* md5 module */
+#include "hal_md5.h"
+#define MAX_DATA_SIZE 1024
+
+/* mcs setting */
+#define ENCODE_MD5_CHANNEL "encodeByMD5"
+#define DECODE_MD5_CHANNEL "decodeByMD5"
 
 static SemaphoreHandle_t ip_ready;
 
@@ -107,21 +110,38 @@ static int32_t _wifi_event_handler(wifi_event_t event,
 
 void mcs_mqtt_callback(char *rcv_buf) {
 
-    int pin = 35;
+    char *arr[7];
+    char *del = ",";
+    mcs_split(arr, rcv_buf, del);
+    // Dln7lL0G,zLfxhiabFnCEZZJc,1459307476444,encodeByMD5,test
+    if (0 == strncmp (arr[3], ENCODE_MD5_CHANNEL, strlen(ENCODE_MD5_CHANNEL))) {
+        /* encode BY MD5 */
+        uint8_t digest[HAL_MD5_DIGEST_SIZE] = {0};
+        printf("User give: %s \n", arr[4]);
+        hal_md5_context_t context = {0};
+        hal_md5_init(&context);
+        hal_md5_append(&context, arr[4], strlen(arr[4]));
+        hal_md5_end(&context, digest);
 
-    hal_pinmux_set_function(pin, 8);
+        uint8_t i;
+        char str_buffer [50] = {0};
+        strcpy(str_buffer, "");
+        for (i = 0; i < sizeof(digest); i++) {
+          if (i % 16 == 0) {
+              printf("\r\n");
+          }
+          char buffer [2];
+          sprintf (buffer, "%02x", digest[i]);
+          strcat(str_buffer, buffer);
+        }
 
-    hal_gpio_status_t ret;
-    ret = hal_gpio_init(pin);
-    ret = hal_gpio_set_direction(pin, HAL_GPIO_DIRECTION_OUTPUT);
-
-    if (NULL != strstr(rcv_buf, GPIO_ON)) {
-        ret = hal_gpio_set_output(pin, 1);
-    } else if (NULL != strstr(rcv_buf, GPIO_OFF)) {
-        ret = hal_gpio_set_output(pin, 0);
+        /* send to MCS */
+        char data_buf [MAX_DATA_SIZE] = {0};
+        strcat(data_buf, DECODE_MD5_CHANNEL);
+        strcat(data_buf, ",,");
+        strcat(data_buf, str_buffer);
+        mcs_upload_datapoint(data_buf);
     }
-    ret = hal_gpio_deinit(pin);
-    printf("rcv_buf: %s\n", rcv_buf);
 }
 
 static void _ip_ready_callback(struct netif *netif)
